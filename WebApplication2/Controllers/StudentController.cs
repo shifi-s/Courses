@@ -10,43 +10,55 @@ namespace WebApplication2.Controllers
     {
         static List<Student> students = new List<Student> { new Student { Id = 1, Name = "r", Address = "c", Age = 19.5, Phone = "055" }, new Student { Id = 2, Name = "e", Address = "c", Age = 19.5, Phone = "055" } };    
         // GET: api/<StudentController>
-        [HttpGet]
-        public IEnumerable<Student> Get()
+        [HttpGet("GetAllStudents")]
+        public IEnumerable<Student> GetAllStudents()
         {
             return students;
         }
 
         // GET api/<StudentController>/5
-        [HttpGet("{id}")]
-        public Student Get(int id)
+        [HttpGet("GetStudentById")]
+        public ActionResult GetStudentById(int id)
         {
-            return students.Find(s=>s.Id==id);
+           var s=students.Find(s=>s.Id==id);
+            if(s == null)
+                return NotFound();  
+            return Ok(s);
         }
 
         // POST api/<StudentController>
-        [HttpPost]
-        public void Post(Student s)
+        [HttpPost("AddStudent")]
+        public void AddStudent(Student s)
         {
             students.Add(s);
         }
 
         // PUT api/<StudentController>/5
-        [HttpPut("{id}")]
-        public void Put(int id,string name=" ",string adress=" ",int age=-1,string phone=" ")
+        [HttpPut("update/updateName")]
+        public void updateName(int id,string name)
         {
-            if (name!=" ")
-             students.Find(s=>s.Id==id).Name=name;
-            if (adress!=" ")
-                students.Find(s => s.Id == id).Address =adress;
-            if(age!=-1)
-                students.Find(s => s.Id == id).Age = age;
-            if(phone!=" ")
-                students.Find(s => s.Id == id).Phone = phone;
+            students.Find(s=>s.Id==id).Name = name;
+        }
+        [HttpPut("update/updatePhone")]
+        public void updatePhone(int id, string phone)
+        {
+            students.Find(s => s.Id == id).Phone = phone;
         }
 
+        [HttpPut("update/updateAdress")]
+        public void updateAdress(int id, string adress)
+        {
+            students.Find(s => s.Id == id).Address = adress;
+        }
+
+        [HttpPut("update/updateAge")]
+        public void updateAge(int id, double age)
+        {
+            students.Find(s => s.Id == id).Age = age;
+        }
         // DELETE api/<StudentController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("DeleteStudent")]
+        public void DeleteStudent(int id)
         {
             students.Remove(students.Find(s => s.Id == id));
         }

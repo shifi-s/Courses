@@ -9,55 +9,75 @@ namespace WebApplication2.Controllers
     [ApiController]
     public class CourseController : ControllerBase
     {
-        static List<Course> courses = new List<Course> { new Course { Id = 1, Name = "unb", Begin_Hour = new TimeOnly(), Day = 1, Minutes = 45, Students = new  List<Student> { new Student { Id = 1, Name = "ttt", Address = "qqq", Age = 19.5, Phone = "055" }, new Student { Id = 2, Name = "hhhh", Address = "yyy", Age = 19, Phone = "054" }, new Student { Id = 3, Name = "ff", Address = "wwww", Age = 18.4, Phone = "053" } }, Teacher = new Teacher { Id = 1, Name = "oo", Address = "eaw", Email = "mnmn", Phone = "052" } } };
+        static List<Course> courses = new List<Course> { new Course { Id = 1, Name = "unb", Begin_Hour = new TimeOnly(), Day = 1, Minutes = 45, Students = new List<Student> { new Student { Id = 1, Name = "ttt", Address = "qqq", Age = 19.5, Phone = "055" }, new Student { Id = 2, Name = "hhhh", Address = "yyy", Age = 19, Phone = "054" }, new Student { Id = 3, Name = "ff", Address = "wwww", Age = 18.4, Phone = "053" } }, Teacher = new Teacher { Id = 1, Name = "oo", Address = "eaw", Email = "mnmn", Phone = "052" } } };
         // GET: api/<CourseController>
-        [HttpGet]
-        public IEnumerable<Course> Get()
+        [HttpGet("GetAllCourses")]
+        public IEnumerable<Course> GetAllCourses()
         {
             return courses;
         }
 
         // GET api/<CourseController>/5
-        [HttpGet("{id}")]
-        public Course Get(int id)
+        [HttpGet("GetCourseById")]
+        public ActionResult GetCourseById(int id)
         {
-            return courses.Find(c=>c.Id==id);
+           var c= courses.Find(c=>c.Id==id);
+            if(c==null)
+                return NotFound();  
+            return Ok(c);
         }
 
-        // POST api/<CourseController>
-        [HttpPost]
-        public void Post([FromBody] Course course)
-        {
-             
-            courses.Add(course);
-        
-        }
 
         // PUT api/<CourseController>/5
-        [HttpPut("{id}")]
-        
-        public void Put(int id,TimeOnly begin=new TimeOnly(), int minutes=0,string name="", int day = 0)
-        {
-            if (minutes > 0)
-                courses.Find(c => c.Id == id).Minutes = minutes;
-           if(name!="")
-                courses.Find(c => c.Id == id).Name = name;
-           if(day>0)
-                courses.Find(c => c.Id == id).Day = day;
-           if (!begin.Equals(new TimeOnly()))
-                courses.Find(c => c.Id == id).Begin_Hour = begin;
+        [HttpPut("update/updateBeginHour")]
 
+        public ActionResult updateCourse(int id, TimeOnly begin)
+        {
+            var c = courses.Find(c => c.Id == id);
+            if(c==null)
+                return NotFound();
+            c.Begin_Hour= begin;    
+            return Ok();
+        }
+        [HttpPut("update/updateDay")]
+
+        public void updateDay(int id, int day)
+        {
+            courses.Find(c => c.Id == id).Day = day;
+        }
+        [HttpPut("update/changeTeacher")]
+        public void deleteStudentFromCourse(int idOfCourse, int idOfTeacher, Teacher t)
+        {
+            courses.Find(c => c.Id == idOfCourse).Teacher = t;
         }
 
+        [HttpPost("AddCourse")]
+        public void AddCourse([FromBody] Course course)
+        {
+
+            courses.Add(course);
+
+        }
+        [HttpPost("studentsList/AddStudentToCourse")]
+        public void AddStudentToCourse(int idOfCourse, Student s)
+        {
+            courses.Find(c => c.Id == idOfCourse).Students.Add(s);
+        }
+
+        [HttpPost("studentsList/deleteStudentFromCourse")]
+        public void deleteStudentFromCourse(int idOfCourse,int idOfStudent)
+        {
+            courses.Find(c => c.Id == idOfCourse).Students.Remove(courses.Find(c => c.Id == idOfCourse).Students.Find(s=>s.Id==idOfStudent));
+        }
+
+      
         // DELETE api/<CourseController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("DeleteCourse")]
+        public void DeleteCourse(int id)
         {
            courses.Remove(courses.Find(c => c.Id == id));   
 
         }
-
-
 
     }
 }

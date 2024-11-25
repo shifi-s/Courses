@@ -9,14 +9,13 @@ namespace WebApplication2.Controllers
     public class TeacherController : ControllerBase
     {
         static List<Teacher> teachers=new List<Teacher>();
-        // GET: api/<TeacherController>
+        
         [HttpGet("GetAllTeachers")]
         public IEnumerable<Teacher> GetAllTeachers()
         {
             return teachers;
         }
-
-        // GET api/<TeacherController>/5
+        
         [HttpGet("GetTeacherById/{id}")]
         public ActionResult GetTeacherById(int id)
         {
@@ -26,42 +25,58 @@ namespace WebApplication2.Controllers
             return Ok(t);
         }
 
-        // POST api/<TeacherController>
         [HttpPost("AddTeacher")]
         public void AddTeacher([FromBody] Teacher teacher)
         {
             teachers.Add(teacher);  
         }
 
-        // PUT api/<TeacherController>/5
         [HttpPut("update/updateName")]
-        public void updateName(int id, string name)
+        public ActionResult updateName(int id, string name)
         {
-            teachers.Find(t => t.Id == id).Name = name;
+            var t=teachers.Find(t => t.Id == id);
+            if (t == null) { return NotFound(); }
+            t.Name = name;
+            return Ok();
         }
+
         [HttpPut("update/updatePhone")]
-        public void updatePhone(int id, string phone)
+        public ActionResult updatePhone(int id, string phone)
         {
-            teachers.Find(t => t.Id == id).Phone = phone;
+            var t=teachers.Find(t => t.Id == id);
+            if (t == null) { return NotFound(); };
+            t.Phone = phone;
+            return Ok();
         }
 
         [HttpPut("update/updateAdress")]
-        public void updateAdress(int id, string adress)
+        public ActionResult updateAdress(int id, string adress)
         {
-            teachers.Find(t => t.Id == id).Address = adress;
+            var t=teachers.Find(t => t.Id == id);
+            if (t == null)
+                return NotFound();
+            t.Address = adress;
+            return Ok();
+
         }
 
         [HttpPut("update/updateEmail")]
-        public void updateEmail(int id, string email)
+        public ActionResult updateEmail(int id, string email)
         {
-            teachers.Find(t => t.Id == id).Email = email;
+            var t = teachers.Find(t => t.Id == id);
+            if (t == null) { return NotFound(); }
+                t.Email = email;
+            return Ok();
         }
 
-        // DELETE api/<TeacherController>/5
         [HttpDelete("deleteTeacher/{id}")]
-        public void deleteTeacher(int id)
+        public ActionResult deleteTeacher(int id)
         {
-            teachers.Remove(teachers.Find(t=> t.Id==id));
+            var t=teachers.Find(t=> t.Id==id);
+            if(t == null)
+                return NotFound();
+            teachers.Remove(t); 
+            return Ok();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Courses;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,18 +9,23 @@ namespace WebApplication2.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        static List<Student> students = new List<Student> { new Student { Id = 1, Name = "r", Address = "c", Age = 19.5, Phone = "055" }, new Student { Id = 2, Name = "e", Address = "c", Age = 19.5, Phone = "055" } };    
-        
+        private readonly DataContext _context;
+
+        public StudentController(DataContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet("GetAllStudents")]
         public IEnumerable<Student> GetAllStudents()
         {
-            return students;
+            return _context.students;
         }
 
         [HttpGet("GetStudentById")]
         public ActionResult GetStudentById(int id)
         {
-           var s=students.Find(s=>s.Id==id);
+           var s=_context.students.Find(s=>s.Id==id);
             if(s == null)
                 return NotFound();  
             return Ok(s);
@@ -28,13 +34,13 @@ namespace WebApplication2.Controllers
         [HttpPost("AddStudent")]
         public void AddStudent(Student s)
         {
-            students.Add(s);
+            _context.students.Add(s);
         }
 
         [HttpPut("update/updateName")]
         public ActionResult updateName(int id,string name)
         {
-            var s = students.Find(s => s.Id == id);
+            var s = _context.students.Find(s => s.Id == id);
             if(s == null)
                 return NotFound();
             s.Name = name;
@@ -44,7 +50,7 @@ namespace WebApplication2.Controllers
         [HttpPut("update/updatePhone")]
         public ActionResult updatePhone(int id, string phone)
         {
-            var s = students.Find(s => s.Id == id);
+            var s = _context.students.Find(s => s.Id == id);
             if (s == null)
                 return NotFound();
             s.Phone = phone;
@@ -54,7 +60,7 @@ namespace WebApplication2.Controllers
         [HttpPut("update/updateAdress")]
         public ActionResult updateAdress(int id, string adress)
         {
-            var s = students.Find(s => s.Id == id);
+            var s = _context.students.Find(s => s.Id == id);
             if (s == null)
                 return NotFound();
             s.Address = adress;
@@ -64,7 +70,7 @@ namespace WebApplication2.Controllers
         [HttpPut("update/updateAge")]
         public ActionResult updateAge(int id, double age)
         {
-            var s = students.Find(s => s.Id == id);
+            var s = _context.students.Find(s => s.Id == id);
             if (s == null)
                 return NotFound();
             s.Age = age;
@@ -74,10 +80,10 @@ namespace WebApplication2.Controllers
         [HttpDelete("DeleteStudent")]
         public ActionResult DeleteStudent(int id)
         {
-            var s = students.Find(s => s.Id == id);
+            var s = _context.students.Find(s => s.Id == id);
             if (s == null)
                 return NotFound();
-            students.Remove(s);
+            _context.students.Remove(s);
             return Ok();
         }
     }

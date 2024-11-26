@@ -1,4 +1,6 @@
 
+using Courses;
+
 namespace WebApplication2
 {
     public class Program
@@ -13,8 +15,9 @@ namespace WebApplication2
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddSingleton<DataContext>();
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

@@ -1,11 +1,11 @@
-﻿namespace WebApplication2
+﻿namespace Courses.Core.Entities
 {
     public class Course
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public List<Student> Students = new List<Student>(); 
+        public List<Student> Students = new List<Student>();
 
         public Teacher Teacher { get; set; }
 

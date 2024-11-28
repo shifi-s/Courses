@@ -1,4 +1,4 @@
-﻿namespace WebApplication2
+﻿namespace Courses.Core.Entities
 {
     public class Student
     {

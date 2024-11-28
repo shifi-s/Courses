@@ -1,10 +1,11 @@
-﻿using Courses;
+﻿using Courses.Core.Entities;
+using Courses.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace WebApplication2.Controllers
+namespace Courses.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -25,9 +26,9 @@ namespace WebApplication2.Controllers
         [HttpGet("GetCourseById")]
         public ActionResult GetCourseById(int id)
         {
-           var c= _context.courses.Find(c=>c.Id==id);
-            if(c==null)
-                return NotFound();  
+            var c = _context.courses.Find(c => c.Id == id);
+            if (c == null)
+                return NotFound();
             return Ok(c);
         }
 
@@ -35,17 +36,17 @@ namespace WebApplication2.Controllers
         public ActionResult updateCourse(int id, TimeOnly begin)
         {
             var c = _context.courses.Find(c => c.Id == id);
-            if(c==null)
+            if (c == null)
                 return NotFound();
-            c.Begin_Hour= begin;    
+            c.Begin_Hour = begin;
             return Ok();
         }
-       
+
         [HttpPut("update/updateDay")]
         public ActionResult updateDay(int id, int day)
         {
             var c = _context.courses.Find(c => c.Id == id);
-            if(c==null)
+            if (c == null)
                 return NotFound();
             c.Day = day;
             return Ok();
@@ -55,7 +56,7 @@ namespace WebApplication2.Controllers
         public ActionResult deleteStudentFromCourse(int idOfCourse, int idOfTeacher, Teacher t)
         {
             var c = _context.courses.Find(c => c.Id == idOfCourse);
-            if(c==null)
+            if (c == null)
                 return NotFound();
             c.Teacher = t;
             return Ok();
@@ -73,32 +74,32 @@ namespace WebApplication2.Controllers
         public ActionResult AddStudentToCourse(int idOfCourse, Student s)
         {
             var c = _context.courses.Find(c => c.Id == idOfCourse);
-            if(c==null)
+            if (c == null)
                 return NotFound();
             c.Students.Add(s);
-            return Ok();    
+            return Ok();
         }
 
         [HttpPost("studentsList/deleteStudentFromCourse")]
-        public ActionResult deleteStudentFromCourse(int idOfCourse,int idOfStudent)
+        public ActionResult deleteStudentFromCourse(int idOfCourse, int idOfStudent)
         {
             var c = _context.courses.Find(c => c.Id == idOfCourse);
-            if(c==null)
+            if (c == null)
                 return NotFound("course not found");
-           var s= c.Students.Find(s=>s.Id==idOfStudent);
-            if (s==null)    
+            var s = c.Students.Find(s => s.Id == idOfStudent);
+            if (s == null)
                 return NotFound("student not found");
             c.Students.Remove(s);
-            return Ok();    
+            return Ok();
         }
 
         [HttpDelete("DeleteCourse")]
         public ActionResult DeleteCourse(int id)
         {
-          var c= _context.courses.Find(c => c.Id == id);
-            if(c==null)
-                return NotFound();  
-            _context.courses.Remove(c);  
+            var c = _context.courses.Find(c => c.Id == id);
+            if (c == null)
+                return NotFound();
+            _context.courses.Remove(c);
             return Ok();
 
         }

@@ -1,8 +1,8 @@
-﻿using WebApplication2;
-
-namespace Courses
+﻿
+using Courses.Core.Entities;
+namespace Courses.Api
 {
-    public class DataContext
+    public class FakeContext : IDataContext
     {
         public List<Teacher> teachers = new List<Teacher>();
         public List<Student> students = new List<Student> { new Student { Id = 1, Name = "r", Address = "c", Age = 19.5, Phone = "055" }, new Student { Id = 2, Name = "e", Address = "c", Age = 19.5, Phone = "055" } };

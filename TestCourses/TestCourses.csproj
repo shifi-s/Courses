@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebApplication2\Courses.csproj" />
+    <ProjectReference Include="..\WebApplication2\Courses.Api.csproj" />
   </ItemGroup>
 
 </Project>

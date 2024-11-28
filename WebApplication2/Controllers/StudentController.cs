@@ -1,9 +1,10 @@
-﻿using Courses;
+﻿
+using Courses.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace WebApplication2.Controllers
+namespace Courses.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -25,9 +26,9 @@ namespace WebApplication2.Controllers
         [HttpGet("GetStudentById")]
         public ActionResult GetStudentById(int id)
         {
-           var s=_context.students.Find(s=>s.Id==id);
-            if(s == null)
-                return NotFound();  
+            var s = _context.students.Find(s => s.Id == id);
+            if (s == null)
+                return NotFound();
             return Ok(s);
         }
 
@@ -38,10 +39,10 @@ namespace WebApplication2.Controllers
         }
 
         [HttpPut("update/updateName")]
-        public ActionResult updateName(int id,string name)
+        public ActionResult updateName(int id, string name)
         {
             var s = _context.students.Find(s => s.Id == id);
-            if(s == null)
+            if (s == null)
                 return NotFound();
             s.Name = name;
             return Ok();

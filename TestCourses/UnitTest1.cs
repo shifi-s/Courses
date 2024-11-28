@@ -1,4 +1,4 @@
-namespace TestControllerCourses
+namespace TestCourses
 {
     public class UnitTest1
     {

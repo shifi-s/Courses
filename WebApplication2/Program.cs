@@ -1,7 +1,6 @@
-
 using Courses;
 
-namespace WebApplication2
+namespace Courses.Api
 {
     public class Program
     {

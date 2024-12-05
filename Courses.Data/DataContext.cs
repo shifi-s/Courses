@@ -1,24 +1,20 @@
 ﻿
 using Courses.Core.Entities;
 using Courses.Core.Services;
+using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace Courses.Data
 {
-    public class DataContext:IDataContext
+    public class DataContext:DbContext,IDataContext
     {
-        public List<Teacher> teachers { get; set; }
-        public List<Student> students { get; set; }
-        public List<Course> courses { get; set; }
+        public DbSet<Teacher> teachers { get; set; }
+        public DbSet<Student> students { get; set; }
+        public DbSet<Course> courses { get; set; }
 
-        public DataContext() 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            teachers= new List<Teacher>();  
-            students= new List<Student>();
-            courses= new List<Course>();
-            teachers.Add(new Teacher { Id = 0, Name = "shifi", Address = "yona", Email = "@", Phone = "054" });
-            students.Add(new Student { Id = 0, Name = "r", Age = 19, Address = "tt", Phone = "055" });
-            courses.Add(new Course { Id = 0, Name = "s", Begin_Hour = new TimeOnly(), Day = 1, Minutes = 45, Teacher = new Teacher(), Students = new List<Student>() });
-
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=shifi-strul-courses-db");
         }
 
     }

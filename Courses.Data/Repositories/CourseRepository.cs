@@ -18,16 +18,16 @@ namespace Courses.Data.Repositories
 
         public List<Course> getAllCourses()
         {
-            return _context.courses;   
+            return _context.courses.ToList();   
         }
 
         public Course getCourseById(int id)
         {
-            return _context.courses.Find(c => c.Id == id); 
+            return _context.courses.ToList().Find(c => c.Id == id); 
         }
         public void deleteCourseById(int id)
         {
-            _context.courses.Remove(_context.courses.Find(c=>c.Id == id));  
+            _context.courses.Remove(_context.courses.ToList().Find(c=>c.Id == id));  
         }
     }
 }

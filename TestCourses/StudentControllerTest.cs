@@ -18,7 +18,7 @@ namespace TestCourses
         public void GetStudentById_ReturnsOk()
         {
             var controller = new StudentRepository(_context);
-            var result = controller.GetStudentsById(1);
+            var result = controller.GetStudent(1);
             Assert.IsType<OkObjectResult>(result);
         }
 

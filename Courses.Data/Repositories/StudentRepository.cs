@@ -19,7 +19,7 @@ namespace Courses.Data.Repositories
 
         public List<Student> GetStudents()
         {
-            return _context.students;
+            return _context.students.ToList()   ;
         }
 
         public void DeleteStudent(Student s)
@@ -29,7 +29,7 @@ namespace Courses.Data.Repositories
 
         public Student GetStudent(int id)
         {
-            return _context.students.Find(s => s.Id == id);
+            return _context.students.ToList().Find(s => s.Id == id);
         }
 
         public void updateAge(Student s,double age)

@@ -20,12 +20,12 @@ namespace Courses.Data.Repositories
 
         public List<Teacher> GetAllTeachers()
         {
-            return _context.teachers;
+            return _context.teachers.ToList();
         }
 
         public Teacher GetTeacherById(int id)
         {
-            return _context.teachers.Find(t => t.Id == id);
+            return _context.teachers.ToList().Find(t => t.Id == id);
         }
     }
 }

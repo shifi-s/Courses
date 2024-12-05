@@ -25,7 +25,8 @@ namespace Courses.Api
             builder.Services.AddScoped<ITeacherService,TeacherService>();
             builder.Services.AddScoped<IStudentService,StudentService>();
             builder.Services.AddScoped<ICourseService,CourseService>();
-            builder.Services.AddSingleton<IDataContext, DataContext>();
+          //  builder.Services.AddSingleton<IDataContext, DataContext>();
+            builder.Services.AddDbContext<IDataContext, DataContext>();
             var app = builder.Build();
 
 

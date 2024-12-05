@@ -1,4 +1,6 @@
-﻿namespace Courses.Core.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Courses.Core.Entities
 {
     public class Course
     {
@@ -11,6 +13,7 @@
 
         public int Day { get; set; }
 
+        [NotMapped]
         public TimeOnly Begin_Hour { get; set; }
         public int Minutes { get; set; }
 

@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Courses.Data\Courses.Data.csproj" />
     <ProjectReference Include="..\WebApplication2\Courses.Api.csproj" />
   </ItemGroup>
 

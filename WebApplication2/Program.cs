@@ -1,4 +1,9 @@
-using Courses;
+using Courses; 
+using Courses.Core.Repositories;
+using Courses.Core.Services;
+using Courses.Data;
+using Courses.Data.Repositories;
+using Courses.Service;
 
 namespace Courses.Api
 {
@@ -14,7 +19,13 @@ namespace Courses.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<DataContext>();
+            builder.Services.AddScoped<ITeacherRepository,TeacherRepository>();
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+            builder.Services.AddScoped<ITeacherService,TeacherService>();
+            builder.Services.AddScoped<IStudentService,StudentService>();
+            builder.Services.AddScoped<ICourseService,CourseService>();
+            builder.Services.AddSingleton<IDataContext, DataContext>();
             var app = builder.Build();
 
 

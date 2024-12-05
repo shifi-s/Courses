@@ -6,16 +6,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Courses.Data;
+using Courses.Data.Repositories;
 
 namespace TestCourses
 {
     public class StudentsControllerTest
     {
+        FakeContext _context = new FakeContext();
         [Fact]
         public void GetStudentById_ReturnsOk()
         {
-            var controller = new StudentController();
-            var result = controller.GetStudentById(1);
+            var controller = new StudentRepository(_context);
+            var result = controller.GetStudentsById(1);
             Assert.IsType<OkObjectResult>(result);
         }
 
